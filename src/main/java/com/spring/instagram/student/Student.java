@@ -40,7 +40,8 @@ public class Student {
 
     private String email;
     @Column(
-            name = "age"
+            name = "age",
+            nullable = false
     )
     private Integer age;
 
