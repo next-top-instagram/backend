@@ -1,7 +1,9 @@
 package com.spring.instagram.student;
 
 import javax.persistence.*;
-
+// Java Persistence API = JPA
+// RDB Manage for java program
+// https://ko.wikipedia.org/wiki/%EC%9E%90%EB%B0%94_%ED%8D%BC%EC%8B%9C%EC%8A%A4%ED%84%B4%EC%8A%A4_API
 @Entity(name = "Student")
 @Table(
         name = "student",
