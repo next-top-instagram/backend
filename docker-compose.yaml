@@ -1,0 +1,46 @@
+version: '3'
+
+networks:
+  insta_spring_net:
+    driver: bridge
+
+services:
+  insta_spring:
+    networks:
+      - insta_spring_net
+    depends_on:
+      - mariadb
+    build: ./
+    volumes:
+      - ./:/app/
+    image: "insta_spring_app"
+    container_name: insta_spring_app_container
+    ports:
+      - 8082:8080
+    restart: always
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5.2.0
+    container_name: insta_phpmyadmin_container
+    depends_on:
+      - mariadb
+    links:
+      - mariadb
+    env_file: .env
+    restart: always
+    ports:
+      - 8081:80
+  mariadb:
+    container_name: insta_mariadb_container
+    image: mariadb:10.8.3
+    ports:
+      - 3306:3306
+    volumes:
+#      - ./db/conf.d:/etc/mysql/conf.d
+      - ./db/data:/var/lib/mysql
+#      - ./db/initdb.d:/docker-entrypoint-initdb.d
+    env_file: .env
+    environment:
+      TZ: Asia/Seoul
+    networks:
+      - insta_spring_net
+    restart: always
