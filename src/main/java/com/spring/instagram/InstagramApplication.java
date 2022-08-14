@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class InstagramApplication {
 
 	@GetMapping("/")
-	String hellworld() {
+	String helloworld() {
 		return "OK.";
 	}
 
