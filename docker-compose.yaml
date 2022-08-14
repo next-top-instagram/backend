@@ -25,8 +25,13 @@ services:
       - mariadb
     links:
       - mariadb
-    env_file: .env
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
     restart: always
+    networks:
+      - insta_spring_net
     ports:
       - 8081:80
   mariadb:
