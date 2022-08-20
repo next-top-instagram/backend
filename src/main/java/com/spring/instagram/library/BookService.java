@@ -13,7 +13,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/api/book")
 public class BookService {
-    private final Logger log = LoggerFactory.getLogger(this.getClass().getSimpleName());
     private BookRepository bookRepository;
 
     @Autowired
@@ -42,7 +41,6 @@ public class BookService {
             this.bookRepository.save(book);
             return "OK";
         } catch (Exception err) {
-            log.error("Error", err);
             return "Fail";
         }
     }
