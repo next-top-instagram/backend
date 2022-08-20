@@ -1,5 +1,7 @@
 package com.spring.instagram.library;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +13,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping(path = "/api/book")
 public class BookService {
-
+    private final Logger log = LoggerFactory.getLogger(this.getClass().getSimpleName());
     private BookRepository bookRepository;
 
     @Autowired
@@ -34,20 +36,19 @@ public class BookService {
         return null;
     }
 
-    @Transactional
     @PostMapping
     public String createBook(@RequestBody Book book) {
         try {
             this.bookRepository.save(book);
             return "OK";
         } catch (Exception err) {
+            log.error("Error", err);
             return "Fail";
         }
     }
 
-    @Transactional
     @PutMapping
-    public String updateBook(Book book) {
+    public String updateBook(@RequestBody Book book) {
         try {
             Optional<Book> bookOptional = this.bookRepository.findById(book.getId());
             if (bookOptional.isPresent()) {
@@ -55,7 +56,7 @@ public class BookService {
                 updateBook.setAuthor(book.getAuthor());
                 updateBook.setTitle(book.getTitle());
                 updateBook.setPublishTime(book.getPublishTime());
-
+                this.bookRepository.save(updateBook);
             } else {
                 return "Fail";
             }
