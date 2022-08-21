@@ -36,9 +36,9 @@ public class BookService {
     }
 
     @PostMapping
-    public String createBook(@RequestBody Book book) {
+    public String createBook(@RequestBody Book book) {//body로 부터가져옴
         try {
-            this.bookRepository.save(book);
+            this.bookRepository.save(book);//insert
             return "OK";
         } catch (Exception err) {
             return "Fail";
@@ -46,12 +46,12 @@ public class BookService {
     }
 
     @PutMapping
-    public String updateBook(@RequestBody Book book) {
+    public String updateBook(@RequestBody Book book) {//body로 가져옴
         try {
             Optional<Book> bookOptional = this.bookRepository.findById(book.getId());
             if (bookOptional.isPresent()) {
                 Book updateBook = bookOptional.get();
-                updateBook.setAuthor(book.getAuthor());
+                updateBook.setAuthor(book.getAuthor());//set으로 바디에 있던거 가져오고 save
                 updateBook.setTitle(book.getTitle());
                 updateBook.setPublishTime(book.getPublishTime());
                 this.bookRepository.save(updateBook);
@@ -67,7 +67,7 @@ public class BookService {
     @DeleteMapping(path = "{id}")
     public String deleteBook(@PathVariable Long id) {
         try {
-            Optional<Book> bookOptional = this.bookRepository.findById(id);
+            Optional<Book> bookOptional = this.bookRepository.findById(id);//id 있으면
             if (bookOptional.isPresent()) {
                 this.bookRepository.delete(bookOptional.get());
             } else {
