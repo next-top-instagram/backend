@@ -1,6 +1,5 @@
 package com.spring.instagram.create;
 
-import com.spring.instagram.library.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

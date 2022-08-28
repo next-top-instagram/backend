@@ -1,9 +1,14 @@
 package com.spring.instagram.create;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.spring.instagram.library.Book;
+import com.spring.instagram.login.UserInfo;
+import org.apache.catalina.User;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -18,25 +23,25 @@ public class Post {
         return "Post{" +
                 "id=" + id +
                 ", body='" + body + '\'' +
-                ", write_by=" + write_by +
+                ", write_by=" + userInfo +
                 ", image_id=" + image_id +
                 ", good_cnt=" + good_cnt +
                 ", create_time=" + create_time +
                 '}';
     }
 
-    public Post(Long id, String body, Long write_by, Long image_id, Long good_cnt, Date create_time) {
+    public Post(Long id, String body, UserInfo userInfo, Long image_id, Long good_cnt, Date create_time) {
         this.id = id;
         this.body = body;
-        this.write_by = write_by;
+        this.userInfo = userInfo;
         this.image_id = image_id;
         this.good_cnt = good_cnt;
         this.create_time = create_time;
     }
 
-    public Post(String body, Long write_by, Long image_id, Long good_cnt, Date create_time) {
+    public Post(String body, UserInfo userInfo, Long image_id, Long good_cnt, Date create_time) {
         this.body = body;
-        this.write_by = write_by;
+        this.userInfo = userInfo;
         this.image_id = image_id;
         this.good_cnt = good_cnt;
         this.create_time = create_time;
@@ -44,9 +49,13 @@ public class Post {
 
     public Post() {
     }
-
-    private Long write_by;
+    @NotNull 
+    @ManyToOne
+    @JoinColumn(name = "userInfo_id")
+    private UserInfo userInfo;
+    @NotNull
     private Long image_id;
+    @ColumnDefault("0")
     private Long good_cnt;
 
     public Long getId() {
@@ -65,12 +74,12 @@ public class Post {
         this.body = body;
     }
 
-    public Long getWrite_by() {
-        return write_by;
+    public UserInfo getWrite_by() {
+        return userInfo;
     }
 
-    public void setWrite_by(Long write_by) {
-        this.write_by = write_by;
+    public void setWrite_by(UserInfo userInfo) {
+        this.userInfo = userInfo;
     }
 
     public Long getImage_id() {
