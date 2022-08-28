@@ -19,7 +19,4 @@ public class ContactListService implements ContactList{
        return languages;
     }
 
-    asdfas() {
-
-    }
 }
