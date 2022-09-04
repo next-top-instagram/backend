@@ -38,7 +38,7 @@ services:
     container_name: insta_mariadb_container
     image: mariadb:10.8.3
     ports:
-      - 3306:3306
+      - 3307:3306
     volumes:
 #      - ./db/conf.d:/etc/mysql/conf.d
       - ./db/data:/var/lib/mysql
