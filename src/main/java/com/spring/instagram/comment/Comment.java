@@ -1,4 +1,8 @@
-package com.spring.instagram.comment;
+/*package com.spring.instagram.comment;
+
+
+import javax.persistence.Entity;
+
 
 public class Comment {
 
@@ -52,3 +56,4 @@ public class Comment {
     }
 
 }
+*/

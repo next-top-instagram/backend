@@ -18,6 +18,7 @@ public class LoginService {
     @PostMapping
     public String Login(@RequestBody LoginModel loginModel) {
         if (loginModel.getEmail().equals("hello@example.com") && loginModel.getPassword().equals("1234")) {
+
             userInfo.setUserNm(loginModel.getEmail());
             userInfo.setUserId(1L);
             return "OK";
@@ -30,7 +31,7 @@ public class LoginService {
     public String AmiLogin() {
         log.info("asdf: " + userInfo.getUserNm());
         if (userInfo.getUserNm() != null) {
-            return userInfo.getUserNm();
+            return userInfo.getUserId().toString()+":"+userInfo.getUserNm();
         }
         return "Fail";
     }

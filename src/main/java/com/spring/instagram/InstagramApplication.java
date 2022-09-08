@@ -2,6 +2,8 @@ package com.spring.instagram;
 
 import com.spring.instagram.library.Book;
 import com.spring.instagram.library.BookRepository;
+import com.spring.instagram.login.LoginModel;
+import com.spring.instagram.login.UserInfo;
 import com.spring.instagram.student.Student;
 import com.spring.instagram.student.StudentRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -52,4 +54,5 @@ public class InstagramApplication {
 			bookRepository.save(book);
 		};
 	}
+
 }

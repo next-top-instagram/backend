@@ -1,4 +1,4 @@
-package com.spring.instagram.comment;
+/*package com.spring.instagram.comment;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,4 +19,4 @@ public class CommentController {
                 "집에 가고 싶다"
         ));
     }
-}
+}*/
