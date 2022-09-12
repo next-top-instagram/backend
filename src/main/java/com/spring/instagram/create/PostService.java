@@ -1,5 +1,6 @@
 package com.spring.instagram.create;
 
+import com.spring.instagram.models.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,10 +39,10 @@ public class PostService {
             if (postOptional.isPresent()) {
                 Post updatePost = postOptional.get();
                 updatePost.setBody(post.getBody());
-                updatePost.setWrite_by(post.getWrite_by());
-                updatePost.setImage_id(post.getImage_id());
-                updatePost.setGood_cnt(post.getGood_cnt());
-                updatePost.setCreate_time(post.getCreate_time());
+//                updatePost.setWrite_by(post.getWrite_by());
+//                updatePost.setImage_id(post.getImage_id());
+//                updatePost.setGood_cnt(post.getGood_cnt());
+//                updatePost.setCreate_time(post.getCreate_time());
                 this.postRepository.save(updatePost);
             } else {
                 return "update Fail";
