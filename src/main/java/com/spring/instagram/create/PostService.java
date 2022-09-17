@@ -1,6 +1,7 @@
 package com.spring.instagram.create;
 
 import com.spring.instagram.models.Post;
+import com.spring.instagram.models.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
