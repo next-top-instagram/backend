@@ -1,12 +1,15 @@
 package com.spring.instagram.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity(name = "postComment")
 public class PostComment {
@@ -18,6 +21,7 @@ public class PostComment {
 
     @ManyToOne
     @JoinColumn(name = "post_id", referencedColumnName = "post_id")
+    @JsonIgnoreProperties(value = "postCommentList")
     private Post postComment;
 
     @OneToOne

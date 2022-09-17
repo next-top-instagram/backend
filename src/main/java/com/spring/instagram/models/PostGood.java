@@ -1,6 +1,7 @@
 package com.spring.instagram.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -14,6 +15,7 @@ public class PostGood {
 
     @ManyToOne
     @JoinColumn(name = "post_id", referencedColumnName = "post_id")
+    @JsonIgnoreProperties(value = "postGoodList")
     private Post postGood;
 
     @OneToOne

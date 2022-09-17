@@ -1,6 +1,7 @@
 package com.spring.instagram.models;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -30,10 +31,12 @@ public class Post {
 
     @OneToMany(mappedBy = "postComment")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnoreProperties(value = "postComment")
     private List<PostComment> postCommentList = new ArrayList<>();
 
     @OneToMany(mappedBy = "postGood")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @JsonIgnoreProperties(value = "postGood")
     private List<PostGood> postGoodList = new ArrayList<>();
 
 
