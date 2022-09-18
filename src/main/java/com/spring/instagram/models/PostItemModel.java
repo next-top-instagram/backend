@@ -19,5 +19,17 @@ public class PostItemModel {
     private int goodCnt;
     private String email;
     private String url;
-    private String user;
+//    private String user;
+
+    public PostItemModel(Long id, String body, Date createTime, int goodCnt, String email, String url) {
+        this.id = id;
+        this.body = body;
+        this.createTime = createTime;
+        this.goodCnt = goodCnt;
+        this.email = email;
+        this.url = url;
+    }
+
+    public PostItemModel() {
+    }
 }

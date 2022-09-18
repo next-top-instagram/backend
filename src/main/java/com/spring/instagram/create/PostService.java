@@ -2,25 +2,27 @@ package com.spring.instagram.create;
 
 import com.spring.instagram.models.Post;
 import com.spring.instagram.models.PostItemModel;
-import com.spring.instagram.models.PostItemRepository;
+//import com.spring.instagram.models.PostItemRepository;
 import com.spring.instagram.models.PostRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/api/post")
 public class PostService {
     private PostRepository postRepository;
-    private PostItemRepository postItemRepository;
+//    private PostItemRepository postItemRepository;
 
     @Autowired
-    public PostService(PostRepository postRepository, PostItemRepository postItemRepository){
+    public PostService(PostRepository postRepository){
         this.postRepository=postRepository;
-        this.postItemRepository = postItemRepository;
     }
     @GetMapping
     public List<Post> postList() {
@@ -37,8 +39,15 @@ public class PostService {
 //    ON p.image_id = r.resource_id
 //    WHERE  a.email = 'user1@example.com';
     @GetMapping(path = "{email}")
-    public List<Object[]> userPostList(@PathVariable String email) {
-        return this.postRepository.findPostListByUser(email);
+    public List<PostItemModel> userPostList(@PathVariable String email) {
+        List<PostItemModel> postList = this.postRepository.findPostListByUser(email).stream().map(post -> new PostItemModel(
+                ((BigInteger) post[0]).longValue(),
+                (String) post[1],
+                (Date) post[2],
+                (Integer) post[3],
+                (String) post[4],
+                (String) post[5])).collect(Collectors.toList());
+        return postList;
     }
 
     @PostMapping
