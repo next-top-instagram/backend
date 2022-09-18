@@ -22,6 +22,11 @@ public class PostService {
         return this.postRepository.findAll();
     }
 
+    @GetMapping(path = "{email}")
+    public List<Object> userPostList() {
+        return List.of();
+    }
+
     @PostMapping
     public String createPost(@RequestBody Post post){
         try{
