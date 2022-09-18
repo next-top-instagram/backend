@@ -22,6 +22,15 @@ public class PostService {
         return this.postRepository.findAll();
     }
 
+//    SELECT p.*,
+//    a.email,
+//    r.url
+//    FROM   `post` p
+//    INNER JOIN account a
+//    ON p.write_by = a.account_id
+//    INNER JOIN resource r
+//    ON p.image_id = r.resource_id
+//    WHERE  a.email = 'user1@example.com';
     @GetMapping(path = "{email}")
     public List<Object> userPostList() {
         return List.of();
