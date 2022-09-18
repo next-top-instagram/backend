@@ -34,7 +34,7 @@ public class CommentService {
         return this.commentController.findAll();
     }
 
-    @GetMapping("{Postid}")
+    @GetMapping("{postid}/{id}") 
     public Comment getComment(@PathVariable Long id) {
         Optional<Comment> commentOptional = this.commentController.findById(id);
         if (commentOptional.isPresent()) {
