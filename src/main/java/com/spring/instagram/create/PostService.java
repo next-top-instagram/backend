@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/api/post")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PostService {
     private PostRepository postRepository;
 //    private PostItemRepository postItemRepository;
