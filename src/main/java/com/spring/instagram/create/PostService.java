@@ -37,7 +37,7 @@ public class PostService {
 //    ON p.image_id = r.resource_id
 //    WHERE  a.email = 'user1@example.com';
     @GetMapping(path = "{email}")
-    public List<PostItemModel> userPostList(@PathVariable String email) {
+    public List<Object[]> userPostList(@PathVariable String email) {
         return this.postRepository.findPostListByUser(email);
     }
 

@@ -24,6 +24,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
                 ON p.image_id = r.resource_id
                 WHERE  a.email = :email
             """)
-    List<PostItemModel> findPostListByUser(@Param("email") String email);
+    List<Object[]> findPostListByUser(@Param("email") String email);
 
 }
