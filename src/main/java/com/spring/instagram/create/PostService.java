@@ -4,9 +4,11 @@ import com.spring.instagram.models.Post;
 import com.spring.instagram.models.PostItemModel;
 //import com.spring.instagram.models.PostItemRepository;
 import com.spring.instagram.models.PostRepository;
+import com.spring.instagram.resource.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigInteger;
 import java.util.Date;
@@ -21,9 +23,11 @@ public class PostService {
     private PostRepository postRepository;
 //    private PostItemRepository postItemRepository;
 
+    private final StorageService storageService;
     @Autowired
-    public PostService(PostRepository postRepository){
+    public PostService(PostRepository postRepository, StorageService storageService) {
         this.postRepository=postRepository;
+        this.storageService = storageService;
     }
     @GetMapping
     public List<Post> postList() {
@@ -52,9 +56,15 @@ public class PostService {
     }
 
     @PostMapping
-    public String createPost(@RequestBody Post post){
+    public String createPost(@RequestBody PostCreateModel postCreateModel, @RequestPart("file") MultipartFile file){
         try{
-            this.postRepository.save(post);
+//            this.postRepository.save(post);
+//            this.postRepository.save(new Post(asdfasf));
+            storageService.store(file);
+            // TODO
+            // 파일 저장 후 db 에 등록
+            // 사용자 idx 값 불러오기, 여의치 않으면 걍 하드코딩
+            // 사용자 입력한 게시물 내용 insert
             return "create Post";
         }
         catch (Exception e){
