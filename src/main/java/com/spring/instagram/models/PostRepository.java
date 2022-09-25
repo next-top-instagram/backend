@@ -2,9 +2,12 @@ package com.spring.instagram.models;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
@@ -26,4 +29,10 @@ public interface PostRepository extends JpaRepository<Post, Long> {
             """)
     List<Object[]> findPostListByUser(@Param("email") String email);
 
+    @Modifying
+    @Query(nativeQuery = true,
+            value = "INSERT INTO post (body, write_by, image_id, good_cnt, create_time) VALUES (:body, :writer, :resourceId, 0, NOW())"
+    )
+    @Transactional
+    int insertNewPost(@Param("body") String body, @Param("writer") Long writer, @Param("resourceId") Long resourceId);
 }

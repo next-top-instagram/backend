@@ -56,7 +56,7 @@ public class PostService {
     }
 
     @PostMapping
-    public String createPost(@RequestBody PostCreateModel postCreateModel, @RequestPart("file") MultipartFile file){
+    public String createPost(@RequestPart("body") String body, @RequestPart("file") MultipartFile file){
         try{
 //            this.postRepository.save(post);
 //            this.postRepository.save(new Post(asdfasf));
@@ -66,7 +66,9 @@ public class PostService {
             // 파일 저장 후 db 에 등록
             // 사용자 idx 값 불러오기, 여의치 않으면 걍 하드코딩
             // 사용자 입력한 게시물 내용 insert
-
+//            this.postRepository.save(new Post(postCreateModel.getBody(), 1, fileId));
+            int result = this.postRepository.insertNewPost(body, 1L, fileId);
+            System.out.println("result: " + result);
             return "create Post";
         }
         catch (Exception e){
