@@ -1,31 +1,70 @@
 package com.spring.instagram.create;
 
 import com.spring.instagram.models.Post;
+import com.spring.instagram.models.PostItemModel;
+//import com.spring.instagram.models.PostItemRepository;
 import com.spring.instagram.models.PostRepository;
+import com.spring.instagram.resource.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "/api/post")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class PostService {
     private PostRepository postRepository;
+//    private PostItemRepository postItemRepository;
 
+    private final StorageService storageService;
     @Autowired
-    public PostService(PostRepository postRepository){
+    public PostService(PostRepository postRepository, StorageService storageService) {
         this.postRepository=postRepository;
+        this.storageService = storageService;
     }
     @GetMapping
     public List<Post> postList() {
         return this.postRepository.findAll();
     }
 
+//    SELECT p.*,
+//    a.email,
+//    r.url
+//    FROM   `post` p
+//    INNER JOIN account a
+//    ON p.write_by = a.account_id
+//    INNER JOIN resource r
+//    ON p.image_id = r.resource_id
+//    WHERE  a.email = 'user1@example.com';
+    @GetMapping(path = "{email}")
+    public List<PostItemModel> userPostList(@PathVariable String email) {
+        List<PostItemModel> postList = this.postRepository.findPostListByUser(email).stream().map(post -> new PostItemModel(
+                ((BigInteger) post[0]).longValue(),
+                (String) post[1],
+                (Date) post[2],
+                (Integer) post[3],
+                (String) post[4],
+                (String) post[5])).collect(Collectors.toList());
+        return postList;
+    }
+
     @PostMapping
-    public String createPost(@RequestBody Post post){
+    public String createPost(@RequestBody PostCreateModel postCreateModel, @RequestPart("file") MultipartFile file){
         try{
-            this.postRepository.save(post);
+//            this.postRepository.save(post);
+//            this.postRepository.save(new Post(asdfasf));
+            storageService.store(file);
+            // TODO
+            // 파일 저장 후 db 에 등록
+            // 사용자 idx 값 불러오기, 여의치 않으면 걍 하드코딩
+            // 사용자 입력한 게시물 내용 insert
             return "create Post";
         }
         catch (Exception e){
