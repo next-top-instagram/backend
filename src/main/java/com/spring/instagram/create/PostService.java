@@ -60,11 +60,13 @@ public class PostService {
         try{
 //            this.postRepository.save(post);
 //            this.postRepository.save(new Post(asdfasf));
-            storageService.store(file);
+            long fileId = storageService.store(file);
+            System.out.println("store id: " + fileId);
             // TODO
             // 파일 저장 후 db 에 등록
             // 사용자 idx 값 불러오기, 여의치 않으면 걍 하드코딩
             // 사용자 입력한 게시물 내용 insert
+
             return "create Post";
         }
         catch (Exception e){
