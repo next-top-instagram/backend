@@ -1,4 +1,4 @@
-package com.spring.instagram.userinfoedit;
+package com.spring.instagram.userInfoEdit;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -7,7 +7,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import java.util.Date;
 
-public class userinfoModel {
+public class userInfoModel {
     private String name;
     private Long id;
     private String info;
