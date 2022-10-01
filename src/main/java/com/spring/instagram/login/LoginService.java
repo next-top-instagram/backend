@@ -1,5 +1,7 @@
 package com.spring.instagram.login;
 
+import com.spring.instagram.models.BasicResponseModel;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -16,30 +18,26 @@ public class LoginService {
     private UserInfo userInfo;
 
     @PostMapping
-    public String Login(@RequestBody LoginModel loginModel) {
+    public BasicResponseModel Login(@RequestBody LoginModel loginModel) {
         if (loginModel.getEmail().equals("hello@example.com") && loginModel.getPassword().equals("1234")) {
             userInfo.setUserNm(loginModel.getEmail());
             userInfo.setUserId(1L);
-            return "OK";
+            return new BasicResponseModel(true, "OK", null);
         }
-        return "Fail";
+        return new BasicResponseModel(false, "FAIL", null);
     }
     private final Logger log = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
     @GetMapping
     @SessionCheck
-    public String AmiLogin(String userName) {
-        //log.info("asdf: " + userInfo.getUserNm());
-        //if (userInfo.getUserNm() != null) {
-        //    return userInfo.getUserNm();
-        //}
-        //return "Fail";
-        return userName;
+    @Parameter(name = "userName", hidden = true)
+    public BasicResponseModel AmiLogin(String userName) {
+        return new BasicResponseModel(true,  "Hi, " + userName, userName);
     }
 
     @DeleteMapping
-    public String Logout(HttpSession session) {
+    public BasicResponseModel Logout(HttpSession session) {
         session.invalidate();
-        return "Bye";
+        return new BasicResponseModel(true, "Bye", null);
     }
 }

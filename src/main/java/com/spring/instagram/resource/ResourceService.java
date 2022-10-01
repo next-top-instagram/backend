@@ -1,5 +1,9 @@
 package com.spring.instagram.resource;
 
+import com.spring.instagram.login.SessionCheck;
+import com.spring.instagram.models.BasicResponseModel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -20,6 +24,7 @@ import java.util.stream.Collectors;
 @RequestMapping(path = "/api/resource")
 public class ResourceService {
     private final StorageService storageService;
+    private final Logger log = LoggerFactory.getLogger(this.getClass().getSimpleName());
     @Autowired
     public ResourceService(StorageService storageService) {
         this.storageService = storageService;
@@ -58,13 +63,15 @@ public class ResourceService {
 
     @PostMapping(value = "upload")
     @ResponseBody
-    public ResponseEntity handleFileUpload(@RequestPart("file") MultipartFile file) {
+    @SessionCheck
+    public ResponseEntity handleFileUpload(String userName, @RequestPart("file") MultipartFile file) {
 
+        log.info("[handleFileUpload] user: " + userName + " is trying to upload file: " + file.getOriginalFilename());
         storageService.store(file);
 //        redirectAttributes.addFlashAttribute("message",
 //                "You successfully uploaded " + file.getOriginalFilename() + "!");
-
-        return ResponseEntity.status(HttpStatus.CREATED).body("OK");
+        return ResponseEntity.status(HttpStatus.CREATED).body(new BasicResponseModel(true, null, MvcUriComponentsBuilder.fromMethodName(ResourceService.class,
+                "serveFile", file.getOriginalFilename()).build().toString()));
     }
 
 }
