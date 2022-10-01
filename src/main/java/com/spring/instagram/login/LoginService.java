@@ -27,12 +27,14 @@ public class LoginService {
     private final Logger log = LoggerFactory.getLogger(this.getClass().getSimpleName());
 
     @GetMapping
-    public String AmiLogin() {
-        log.info("asdf: " + userInfo.getUserNm());
-        if (userInfo.getUserNm() != null) {
-            return userInfo.getUserNm();
-        }
-        return "Fail";
+    @SessionCheck
+    public String AmiLogin(String userName) {
+        //log.info("asdf: " + userInfo.getUserNm());
+        //if (userInfo.getUserNm() != null) {
+        //    return userInfo.getUserNm();
+        //}
+        //return "Fail";
+        return userName;
     }
 
     @DeleteMapping
