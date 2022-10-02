@@ -32,7 +32,10 @@ public class SessionChecker {
         if (userInfo.getUserNm() != null) {
             log.info("[SessionChecker] [around] Hi, " + userInfo.getUserNm());
             signatureArgs[0] = userInfo.getUserNm();
-            Object result = joinPoint.proceed(signatureArgs);
+            Object result = joinPoint.proceed(signatureArgs);//AmiLogin(userName); handleFileUpload(userName, ...);
+//            AmiLogin(userName);
+            log.info("[SessionChecker] done");
+//            DB.insert(result.getName();
             return result;
         }
         log.info("[around] Not logged in");

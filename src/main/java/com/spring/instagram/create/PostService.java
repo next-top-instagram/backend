@@ -1,5 +1,6 @@
 package com.spring.instagram.create;
 
+import com.spring.instagram.login.SessionCheck;
 import com.spring.instagram.models.Post;
 import com.spring.instagram.models.PostItemModel;
 //import com.spring.instagram.models.PostItemRepository;
@@ -56,7 +57,8 @@ public class PostService {
     }
 
     @PostMapping
-    public String createPost(@RequestPart("body") String body, @RequestPart("file") MultipartFile file){
+    @SessionCheck
+    public String createPost(String userName, @RequestPart("body") String body, @RequestPart("file") MultipartFile file){
         try{
 //            this.postRepository.save(post);
 //            this.postRepository.save(new Post(asdfasf));
@@ -99,6 +101,9 @@ public class PostService {
     @DeleteMapping(path="{id}")
     public String deletePost(@PathVariable Long id){
         try {
+            // TODO
+            // 삭제요청한 사용자의 아이디가 작성자일 경우 @SessionChecker
+            // 해당 게시물이 실제로 있는 경우
             Optional<Post> postOptional = this.postRepository.findById(id);
             if (postOptional.isPresent()) {
                 this.postRepository.delete(postOptional.get());
