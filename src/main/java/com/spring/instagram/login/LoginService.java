@@ -19,7 +19,7 @@ public class LoginService {
 
     @PostMapping
     public BasicResponseModel Login(@RequestBody LoginModel loginModel) {
-        if (loginModel.getEmail().equals("hello@example.com") && loginModel.getPassword().equals("1234")) {
+        if (loginModel.getEmail().equals("hello@example.com") && loginModel.getPassword().equals("@Test1234")) {
             userInfo.setUserNm(loginModel.getEmail());
             userInfo.setUserId(1L);
             return new BasicResponseModel(true, "OK", null);
