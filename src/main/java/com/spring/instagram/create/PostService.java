@@ -58,7 +58,9 @@ public class PostService {
 
     @PostMapping
     @SessionCheck
-    public String createPost(String userName,@RequestPart("body") String body, @RequestPart("file") MultipartFile file){
+
+    public String createPost(String userName, @RequestPart("body") String body, @RequestPart("file") MultipartFile file){
+
         try{
 //            this.postRepository.save(post);
 //            this.postRepository.save(new Post(asdfasf));
@@ -102,6 +104,9 @@ public class PostService {
     @SessionCheck
     public String deletePost(String userName,@PathVariable Long id){
         try {
+            // TODO
+            // 삭제요청한 사용자의 아이디가 작성자일 경우 @SessionChecker
+            // 해당 게시물이 실제로 있는 경우
             Optional<Post> postOptional = this.postRepository.findById(id);
             if (postOptional.isPresent()
                     && postOptional.get().getWriteBy().getEmail().equals(userName)) {
