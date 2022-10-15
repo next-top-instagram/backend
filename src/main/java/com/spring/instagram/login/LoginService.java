@@ -12,7 +12,7 @@ import java.util.Random;
 
 @RestController
 @RequestMapping(path = "/api/login")
-@CrossOrigin(origins = "*", allowedHeaders = "*")
+//@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class LoginService {
 
     @Resource
