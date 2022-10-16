@@ -7,7 +7,7 @@ networks:
 services:
   insta_nginx:
     extra_hosts:
-      - "host.docker,internal:host-gateway"
+      - "host.docker.internal:host-gateway"
     networks:
       - insta_spring_net
     depends_on:
