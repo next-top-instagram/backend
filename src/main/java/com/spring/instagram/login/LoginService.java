@@ -46,6 +46,7 @@ public class LoginService {
     @SessionCheck
     @Parameter(name = "userName", hidden = true)
     public BasicResponseModel AmiLogin(String userName) {
+        System.out.println("Can u see me?");
         return new BasicResponseModel(true,  "Hi, " + userName, userName);
     }
 

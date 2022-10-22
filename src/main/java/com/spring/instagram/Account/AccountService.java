@@ -42,9 +42,10 @@ public class AccountService {
     @PutMapping
     @SessionCheck
     @Parameter(name = "userName", hidden = true)
-    public BasicResponseModel updatePassword(@RequestBody SignUpModel data, String userName) {
+    public BasicResponseModel updatePassword(String userName, @RequestBody SignUpModel data) {
         try {
 //            Optional<Account> account = accountRepository.fin
+            System.out.println("test email: " + userName);
             accountRepository.updateAccountPassword(userName, data.getPassword());
             return new BasicResponseModel(true, "OK", null);
         } catch (Exception e) {
