@@ -45,6 +45,7 @@ public class AccountService {
     public BasicResponseModel updatePassword(@RequestBody SignUpModel data, String userName) {
         try {
 //            Optional<Account> account = accountRepository.fin
+            accountRepository.updateAccountPassword(userName, data.getPassword());
             return new BasicResponseModel(true, "OK", null);
         } catch (Exception e) {
             return new BasicResponseModel(false, e.getMessage(), null);

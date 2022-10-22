@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
+    @Query(value = "update Account set `password` = :password where email = :email", nativeQuery = true)
+    void updateAccountPassword(String email, String password);
 
     @Query(value = "select count(*) from Account a where a.email = ?1", nativeQuery = true)
     Long isAccountAlreadyExist(String email);
