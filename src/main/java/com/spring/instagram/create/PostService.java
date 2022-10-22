@@ -24,6 +24,7 @@ public class PostService {
     private PostRepository postRepository;
 //    private PostItemRepository postItemRepository;
 
+    private final int PAGE_LIMIT_SIZE = 3;
     private final StorageService storageService;
     @Autowired
     public PostService(PostRepository postRepository, StorageService storageService) {
@@ -31,8 +32,15 @@ public class PostService {
         this.storageService = storageService;
     }
     @GetMapping
-    public List<Post> postList() {
-        return this.postRepository.findAll();
+    public List<PostItemModel> postList(@RequestParam(required = false, defaultValue = "0") int page) {
+        List<PostItemModel> postList = this.postRepository.getLatestPostList(page * PAGE_LIMIT_SIZE).stream().map(post -> new PostItemModel(
+                ((BigInteger) post[0]).longValue(),
+                (String) post[1],
+                (Date) post[2],
+                (Integer) post[3],
+                (String) post[4],
+                (String) post[5])).collect(Collectors.toList());
+        return postList;
     }
 
 //    SELECT p.*,
