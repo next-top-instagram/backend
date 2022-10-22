@@ -1,6 +1,7 @@
 package com.spring.instagram.create;
 
 import com.spring.instagram.login.SessionCheck;
+import com.spring.instagram.models.BasicResponseModel;
 import com.spring.instagram.models.Post;
 import com.spring.instagram.models.PostItemModel;
 //import com.spring.instagram.models.PostItemRepository;
@@ -111,7 +112,7 @@ public class PostService {
     }
     @DeleteMapping(path="{id}")
     @SessionCheck
-    public String deletePost(String userName,@PathVariable Long id){
+    public BasicResponseModel deletePost(String userName, @PathVariable Long id){
         try {
             // TODO
             // 삭제요청한 사용자의 아이디가 작성자일 경우 @SessionChecker
@@ -121,14 +122,14 @@ public class PostService {
                     && postOptional.get().getWriteBy().getEmail().equals(userName)) {
 
                 this.postRepository.delete(postOptional.get());
+
+                return new BasicResponseModel(true, "OK", null);
             } else {
-                return "Default fail";
+                return new BasicResponseModel(false, "Not exist or permission denied", null);
             }
         } catch(Exception err) {
-            return "Fail";
+            return new BasicResponseModel(false, err.getMessage(), null);
         }
-        return "delete OK";
-
     }
 
 

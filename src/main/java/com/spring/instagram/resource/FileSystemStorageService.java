@@ -35,8 +35,9 @@ public class FileSystemStorageService implements StorageService {
     }
 
     public long registerFileToDB(MultipartFile file) {
-        String url = MvcUriComponentsBuilder.fromMethodName(ResourceService.class,
-                "serveFile", file.getOriginalFilename()).build().toString();
+//        String url = MvcUriComponentsBuilder.fromMethodName(ResourceService.class,
+//                "serveFile", file.getOriginalFilename()).build().toString();
+        String url = "/api/resource/" + file.getOriginalFilename();
         System.out.println("url: " + url);
 
         return this.resourceRepository.save(new com.spring.instagram.models.Resource(file.getContentType(), new Date(), url)).getId();
