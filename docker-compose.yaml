@@ -3,9 +3,11 @@ version: '3'
 networks:
   insta_spring_net:
     driver: bridge
-
+#  host-gateway
+# docker network inspect bridge --format='{{json .IPAM.Config}}'
 services:
   insta_nginx:
+#    network_mode: host
     extra_hosts:
       - "host.docker.internal:host-gateway"
     networks:
