@@ -47,8 +47,11 @@ LIMIT 3 OFFSET :offset
                 INNER JOIN resource r
                 ON p.image_id = r.resource_id
                 WHERE  a.email = :email
+                ORDER by p.create_time desc
+                , p.post_id desc
+                LIMIT 9 OFFSET :offset
             """)
-    List<Object[]> findPostListByUser(@Param("email") String email);
+    List<Object[]> findPostListByUser(@Param("email") String email, @Param("offset") Integer offset);
 
     @Modifying
     @Query(nativeQuery = true,

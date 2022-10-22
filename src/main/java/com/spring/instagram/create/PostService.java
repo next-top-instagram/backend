@@ -25,6 +25,7 @@ public class PostService {
 //    private PostItemRepository postItemRepository;
 
     private final int PAGE_LIMIT_SIZE = 3;
+    private final int MY_PROFILE_PAGE_LIMIT_SIZE = 9;
     private final StorageService storageService;
     @Autowired
     public PostService(PostRepository postRepository, StorageService storageService) {
@@ -53,8 +54,8 @@ public class PostService {
 //    ON p.image_id = r.resource_id
 //    WHERE  a.email = 'user1@example.com';
     @GetMapping(path = "{email}")
-    public List<PostItemModel> userPostList(@PathVariable String email) {
-        List<PostItemModel> postList = this.postRepository.findPostListByUser(email).stream().map(post -> new PostItemModel(
+    public List<PostItemModel> userPostList(@PathVariable String email, @RequestParam(required = false, defaultValue = "0") int page) {
+        List<PostItemModel> postList = this.postRepository.findPostListByUser(email, page * MY_PROFILE_PAGE_LIMIT_SIZE).stream().map(post -> new PostItemModel(
                 ((BigInteger) post[0]).longValue(),
                 (String) post[1],
                 (Date) post[2],
