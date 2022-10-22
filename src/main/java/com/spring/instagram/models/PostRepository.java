@@ -26,6 +26,22 @@ SELECT p.post_id,
                 ON p.write_by = a.account_id
                 INNER JOIN resource r
                 ON p.image_id = r.resource_id
+               where p.post_id = :postid
+            """)
+    List<Object[]>getSpecificPost(@Param("postid") Integer postid);
+
+    @Query(nativeQuery = true, value = """
+SELECT p.post_id,
+                p.body,
+                p.create_time,
+                p.good_cnt,
+                a.email,
+                r.url
+                FROM   post p
+                INNER JOIN account a
+                ON p.write_by = a.account_id
+                INNER JOIN resource r
+                ON p.image_id = r.resource_id
 
 ORDER by p.create_time desc
 , p.post_id desc

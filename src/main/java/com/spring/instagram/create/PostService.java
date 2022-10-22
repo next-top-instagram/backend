@@ -33,6 +33,18 @@ public class PostService {
         this.postRepository=postRepository;
         this.storageService = storageService;
     }
+    @GetMapping(value = "item/{id}")
+    public BasicResponseModel postItem(@PathVariable int id) {
+        List<PostItemModel> postList = this.postRepository.getSpecificPost(id).stream().map(post -> new PostItemModel(
+                ((BigInteger) post[0]).longValue(),
+                (String) post[1],
+                (Date) post[2],
+                (Integer) post[3],
+                (String) post[4],
+                (String) post[5])).collect(Collectors.toList());
+        return new BasicResponseModel(true, null, postList.size() > 0 ? postList.get(0) : null);
+    }
+
     @GetMapping
     public List<PostItemModel> postList(@RequestParam(required = false, defaultValue = "0") int page) {
         List<PostItemModel> postList = this.postRepository.getLatestPostList(page * PAGE_LIMIT_SIZE).stream().map(post -> new PostItemModel(
