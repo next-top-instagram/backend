@@ -63,7 +63,7 @@ public class InstagramApplication {
 										PostCommentRepository postCommentRepository,
 										PostGoodRepository postGoodRepository) {
 		return args -> {
-			Account account1 = new Account(1L, "hello@example.com", "1234");
+			Account account1 = new Account(1L, "hello@example.com", "@Test1234");
 			Account account2 = new Account(2L, "user2@example.com", "1234");
 			Account account3 = new Account(3L, "user3@example.com", "1234");
 			accountRepository.saveAll(List.of(account1, account2, account3));

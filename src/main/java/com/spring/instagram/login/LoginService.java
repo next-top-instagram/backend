@@ -1,12 +1,17 @@
 package com.spring.instagram.login;
 
+import com.spring.instagram.models.AccountRepository;
 import com.spring.instagram.models.BasicResponseModel;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.Random;
 
@@ -15,17 +20,25 @@ import java.util.Random;
 //@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class LoginService {
 
+    @Autowired
+    private final AccountRepository accountRepository;
+
+    public LoginService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
+
     @Resource
     private UserInfo userInfo;
 
     @PostMapping
-    public BasicResponseModel Login(@RequestBody LoginModel loginModel) {
-        if (loginModel.getEmail().equals("hello@example.com") && loginModel.getPassword().equals("@Test1234")) {
-            userInfo.setUserNm(loginModel.getEmail());
-            userInfo.setUserId(1L);
-            return new BasicResponseModel(true, "OK", null);
+    public ResponseEntity<BasicResponseModel> Login(@RequestBody LoginModel loginModel) {
+        Long cnt = accountRepository.authenticationViaEmailAndPassword(loginModel.getEmail(), loginModel.getPassword());
+        if (cnt <= 0) {
+            return new ResponseEntity<>(new BasicResponseModel(false, "Email and password mismatch or not registered", null), HttpStatus.UNAUTHORIZED);
         }
-        return new BasicResponseModel(false, "FAIL", null);
+        userInfo.setUserNm(loginModel.getEmail());
+        userInfo.setUserId(1L);
+        return new ResponseEntity<>(new BasicResponseModel(true, "OK", null), HttpStatus.OK);
     }
     private final Logger log = LoggerFactory.getLogger(this.getClass().getSimpleName());
 

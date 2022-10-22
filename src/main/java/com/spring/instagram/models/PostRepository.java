@@ -15,6 +15,26 @@ public interface PostRepository extends JpaRepository<Post, Long> {
 //    List<Object> findPost(Pageable pageable);
 
     @Query(nativeQuery = true, value = """
+SELECT p.post_id,
+                p.body,
+                p.create_time,
+                p.good_cnt,
+                a.email,
+                r.url
+                FROM   post p
+                INNER JOIN account a
+                ON p.write_by = a.account_id
+                INNER JOIN resource r
+                ON p.image_id = r.resource_id
+
+ORDER by p.create_time desc
+, p.post_id desc
+LIMIT 3 OFFSET :offset
+;
+            """)
+    List<Object[]> getLatestPostList(@Param("offset") Integer offset);
+
+    @Query(nativeQuery = true, value = """
             SELECT p.post_id,
                 p.body,
                 p.create_time,

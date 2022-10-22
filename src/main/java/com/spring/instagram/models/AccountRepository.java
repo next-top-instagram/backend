@@ -9,4 +9,7 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
 
     @Query(value = "select count(*) from Account a where a.email = ?1", nativeQuery = true)
     Long findAccountByEmail(String email);
+
+    @Query(value = "select count(*) from Account a where a.email = ?1 and a.password = ?2", nativeQuery = true)
+    Long authenticationViaEmailAndPassword(String email, String password);
 }
