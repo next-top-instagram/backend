@@ -9,7 +9,7 @@ import java.util.List;
 public interface PostCommentRepository extends JpaRepository<PostComment, Long> {
     @Query(nativeQuery = true, value = """
             INSERT INTO post_comment(body, comment_time, comment_by_account_id, post_id)
-            VALUE (:body, NOW(), SELECT account_id FROM account where email = :email, :postid)
+            Select :body, NOW(), (SELECT account_id FROM account where email = :email) as account_id, :postid
             """)
     void createComment(@Param("body")String body, @Param("email") String email, @Param("postid") int postid);
 

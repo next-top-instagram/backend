@@ -37,6 +37,7 @@ public class CommentController {
     @SessionCheck
     public BasicResponseModel createComment(String userName, @RequestBody PostCommentModel postCommentModel) {
         try {
+            System.out.println("test" + postCommentModel.getBody() + "/" + userName + "/" + postCommentModel.getPostid());
             this.postCommentRepository.createComment(postCommentModel.getBody(), userName, postCommentModel.getPostid());
             return new BasicResponseModel(true, "OK", null);
         } catch (Exception e) {
