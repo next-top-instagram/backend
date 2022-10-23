@@ -3,8 +3,25 @@ version: '3'
 networks:
   insta_spring_net:
     driver: bridge
-
+#  host-gateway
+# docker network inspect bridge --format='{{json .IPAM.Config}}'
 services:
+  insta_nginx:
+#    network_mode: host
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - insta_spring_net
+    depends_on:
+      - insta_spring
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+    image: nginx:1.22
+    container_name: insta_spring_nginx_container
+    ports:
+      - 8089:80
+    restart: always
+
   insta_spring:
     networks:
       - insta_spring_net
@@ -25,15 +42,20 @@ services:
       - mariadb
     links:
       - mariadb
-    env_file: .env
+    environment:
+      PMA_HOST: mariadb
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
     restart: always
+    networks:
+      - insta_spring_net
     ports:
       - 8081:80
   mariadb:
     container_name: insta_mariadb_container
     image: mariadb:10.8.3
     ports:
-      - 3306:3306
+      - 3307:3306
     volumes:
 #      - ./db/conf.d:/etc/mysql/conf.d
       - ./db/data:/var/lib/mysql
